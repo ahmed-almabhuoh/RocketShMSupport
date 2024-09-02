@@ -21,11 +21,11 @@ class CheckIsAdminOrAgentMiddleware
             if (! auth()->user()?->is_admin) {
                 Auth::logout();
                 session()->invalidate();
-                return redirect('/dashboard/login');
+                return redirect('/support/login');
             } else if (auth()->user()->role != 'agent') {
                 Auth::logout();
                 session()->invalidate();
-                return redirect('/dashboard/login');
+                return redirect('/support/login');
             }else
                 return $next($request);
         }
