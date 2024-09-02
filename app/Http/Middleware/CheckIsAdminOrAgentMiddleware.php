@@ -20,8 +20,11 @@ class CheckIsAdminOrAgentMiddleware
 
             if (auth()->user()?->is_admin  || auth()->user()->role == 'agent') {
                 return $next($request);
-            }else
-                return $next($request);
+            } else {
+                Auth::logout();
+                session()->invalidate();
+                return redirect('/support/login');
+            }
         }
         return $next($request);
     }
