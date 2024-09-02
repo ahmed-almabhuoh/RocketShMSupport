@@ -28,6 +28,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('support')
             ->path('support')
             ->login()
+            ->brandName('ShM Support')
+            ->brandLogo(asset('assets/logo.png'))
+            ->favicon(asset('assets/logo.png'))
             ->colors([
                 'primary' => '#1BC5BD',
             ])
