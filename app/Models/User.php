@@ -63,7 +63,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasName, Filament
             ])->get(env('ROCKET_SHM__DASHBOARD_LINK_PRODUCTION') . 'api/build/user/settings/' . Crypt::encrypt($user->id));
 
             info($response);
-
         });
     }
 
@@ -228,6 +227,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasName, Filament
     public function conversations(): HasMany
     {
         return $this->hasMany(Conversation::class, 'sender_id', 'id')->orWhere('receiver_id', $this->id);
+    }
+
+    public function blogs(): HasMany
+    {
+        return $this->hasMany(Blog::class, 'creator_id', 'id');
     }
 
     // Scopes
