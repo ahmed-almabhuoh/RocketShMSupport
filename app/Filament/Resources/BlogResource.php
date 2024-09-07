@@ -5,11 +5,14 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BlogResource\Pages;
 use App\Filament\Resources\BlogResource\RelationManagers;
 use App\Models\Blog;
+use Closure;
 use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -45,18 +48,29 @@ class BlogResource extends Resource
                         TextInput::make('title')
                             ->label('Blog Title')
                             ->required()
-                            ->minValue(2)
-                            ->maxValue(50)
-                            ->reactive()
-                            ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state)))
-                            ->unique(),
+                            ->minLength(2) // Use minLength instead of minValue for text input
+                            ->maxLength(50) // Use maxLength instead of maxValue for text input
+                            ->unique()
+                            ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
+                                if (! $get('is_slug_changed_manually') && filled($state)) {
+                                    $set('slug', Str::slug($state));
+                                }
+                            })
+                            ->reactive(),
 
                         TextInput::make('slug')
                             ->label('Blog Slug')
                             ->required()
-                            ->minValue(2)
-                            ->maxValue(50)
-                            ->unique(),
+                            ->minLength(2)
+                            ->maxLength(50)
+                            ->unique()
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('is_slug_changed_manually', true);
+                            }), // Make the field reactive so it updates automatically
+
+                        Hidden::make('is_slug_changed_manually')
+                            ->default(false)
+                            ->dehydrated(false),
 
                         MarkdownEditor::make('content')
                             ->label('Blog Content')
@@ -77,6 +91,14 @@ class BlogResource extends Resource
                             ->label('Publish Blog At')
                             ->nullable()
                     ]),
+
+                    Section::make('Related On')->schema([
+
+                        Select::make('blog_category_id')
+                            ->relationship('category', 'name_en')
+                            ->searchable(),
+
+                    ]),
                 ]),
             ]);
     }
@@ -94,6 +116,11 @@ class BlogResource extends Resource
 
                 TextColumn::make('slug')
                     ->label('Slug')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('category.name_en')
+                    ->label('Category')
                     ->sortable()
                     ->searchable(),
 

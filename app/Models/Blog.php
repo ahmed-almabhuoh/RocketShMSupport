@@ -23,7 +23,7 @@ class Blog extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(BlogCategory::class, 'blog_category_id', 'id');
+        return $this->belongsTo(BlogCategory::class, 'blog_category_id');
     }
 
 

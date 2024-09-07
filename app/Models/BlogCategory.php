@@ -20,7 +20,7 @@ class BlogCategory extends Model
     // Relations 
     public function blogs(): HasMany
     {
-        return $this->hasMany(Blog::class, 'blog_category_id', 'id');
+        return $this->hasMany(Blog::class, 'blog_category_id');
     }
 
     // Scopes
