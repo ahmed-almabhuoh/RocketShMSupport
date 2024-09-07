@@ -195,7 +195,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="p-6">
-                    <h2 class="text-dark mb-8">Buying Product &amp; Support</h2>
+                    <h2 class="text-dark mb-8">{{ __('Common Questions') }}</h2>
                     <div class="row">
                         <div class="col-lg-3">
                             <!--begin::Navigation-->
@@ -401,30 +401,18 @@
         <div class="card card-custom p-6">
             <div class="card-body">
                 <!--begin::Heading-->
-                <h2 class="text-dark mb-8">AirPlus SAAS License</h2>
+                <h2 class="text-dark mb-8">{{ __('Articals') }}</h2>
                 <!--end::Heading-->
-                <!--begin::Content-->
-                <h4 class="font-weight-bold text-dark mb-4">Basic License</h4>
-                <div class="text-dark-50 line-height-lg mb-8">
-                    <p>Windows 10 automatically downloads and installs updates to make sure your device
-                        is secure and up to date. This means you receive the latest fixes and security
-                        updates, helping your device run efficiently and stay protected. In most cases,
-                        restarting your device completes the update. Make sure your device is plugged in
-                        when you know updates will be installed.</p>
-                    <a class="font-weight-bold" href="#">Read More</a>
-                </div>
-                <!--end::Content-->
-                <!--begin::Content-->
-                <h4 class="font-weight-bold text-dark mb-4">Extended License</h4>
-                <div class="text-dark-50 line-height-lg">
-                    <p>Windows 10 automatically downloads and installs updates to make sure your device
-                        is secure and up to date. This means you receive the latest fixes and security
-                        updates, helping your device run efficiently and stay protected. In most cases,
-                        restarting your device completes the update. Make sure your device is plugged in
-                        when you know updates will be installed.</p>
-                    <a class="font-weight-bold" href="#">Read More</a>
-                </div>
-                <!--end::Content-->
+
+                @foreach ($blogs as $blog)
+                    <h4 class="font-weight-bold text-dark mb-4">{{ $blog->title }}</h4>
+                    <div class="text-dark-50 line-height-lg mb-8">
+                        <p>{{ $blog->heading }}</p>
+
+                        <a class="font-weight-bold" href="#">{{__('Read More')}}</a>
+                    </div>
+                @endforeach
+
             </div>
         </div>
     </div>

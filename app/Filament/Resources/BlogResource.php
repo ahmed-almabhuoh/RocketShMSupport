@@ -48,8 +48,8 @@ class BlogResource extends Resource
                         TextInput::make('title')
                             ->label('Blog Title')
                             ->required()
-                            ->minLength(2) // Use minLength instead of minValue for text input
-                            ->maxLength(50) // Use maxLength instead of maxValue for text input
+                            ->minLength(2)
+                            ->maxLength(50)
                             ->unique()
                             ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
                                 if (! $get('is_slug_changed_manually') && filled($state)) {
@@ -66,11 +66,17 @@ class BlogResource extends Resource
                             ->unique()
                             ->afterStateUpdated(function (Set $set) {
                                 $set('is_slug_changed_manually', true);
-                            }), // Make the field reactive so it updates automatically
+                            }),
 
                         Hidden::make('is_slug_changed_manually')
                             ->default(false)
                             ->dehydrated(false),
+
+                        MarkdownEditor::make('heading')
+                            ->label('Blog Heading')
+                            ->helperText('This will shown from the blog before opening the blog')
+                            ->required()
+                            ->columnSpanFull(),
 
                         MarkdownEditor::make('content')
                             ->label('Blog Content')
@@ -95,6 +101,8 @@ class BlogResource extends Resource
                     Section::make('Related On')->schema([
 
                         Select::make('blog_category_id')
+                            ->required()
+                            ->exists('blog_categories', 'id')
                             ->relationship('category', 'name_en')
                             ->searchable(),
 

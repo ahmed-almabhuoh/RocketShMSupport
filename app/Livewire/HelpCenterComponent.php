@@ -16,6 +16,8 @@ class HelpCenterComponent extends Component
 
     public function render()
     {
-        return view('livewire.help-center-component')->title('Rocket Support');
+        return view('livewire.help-center-component', [
+            'blogs' => $this->blogs,
+        ])->title('Rocket Support');
     }
 }

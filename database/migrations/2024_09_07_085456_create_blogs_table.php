@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->text('content');
             $table->string('slug')->unique();
+            $table->text('heading')->nullable();
             $table->enum('status', Blog::STATUS);
 
             $table->foreignId('blog_category_id')->nullable()->constrained('categories', 'id')->nullOnDelete();
-            
+
             $table->timestamp('published_at')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

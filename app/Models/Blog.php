@@ -28,7 +28,7 @@ class Blog extends Model
 
 
     // Scopes
-    public function statusScope($query, $status = 'active')
+    public function scopeStatus($query, $status = 'active')
     {
         return $query->where('status', $status);
     }
