@@ -33,7 +33,7 @@ class BlogResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-bars-4';
 
-    protected static ?string $navigationGroup = 'Content Management - CM -';
+    protected static ?string $navigationGroup = 'Articles Management - AM -';
 
     public static function form(Form $form): Form
     {

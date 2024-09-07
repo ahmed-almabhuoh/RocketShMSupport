@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BlogCategoryResource\Pages;
-use App\Filament\Resources\BlogCategoryResource\RelationManagers;
-use App\Models\BlogCategory;
+use App\Filament\Resources\CommonQuestionCategoryResource\Pages;
+use App\Filament\Resources\CommonQuestionCategoryResource\RelationManagers;
+use App\Models\CommonQuestionCategory;
 use Filament\Forms;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
@@ -19,20 +19,19 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class BlogCategoryResource extends Resource
+class CommonQuestionCategoryResource extends Resource
 {
-    protected static ?string $model = BlogCategory::class;
+    protected static ?string $model = CommonQuestionCategory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationGroup = 'Articles Management - AM -';
+    protected static ?string $navigationGroup = 'FQA Questions - FQAQ -';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 //
-
                 Group::make()->schema([
 
                     Section::make()->schema([
@@ -74,7 +73,6 @@ class BlogCategoryResource extends Resource
         return $table
             ->columns([
                 //
-
                 TextColumn::make('name_ar')
                     ->label('Name AR')
                     ->sortable()
@@ -103,9 +101,11 @@ class BlogCategoryResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->filters([
                 //
+
                 SelectFilter::make('status')
                     ->label('Category Visibility')
                     ->options(['active' => 'Active', 'inactive' => 'Inactive']),
@@ -134,9 +134,9 @@ class BlogCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBlogCategories::route('/'),
-            'create' => Pages\CreateBlogCategory::route('/create'),
-            'edit' => Pages\EditBlogCategory::route('/{record}/edit'),
+            'index' => Pages\ListCommonQuestionCategories::route('/'),
+            'create' => Pages\CreateCommonQuestionCategory::route('/create'),
+            'edit' => Pages\EditCommonQuestionCategory::route('/{record}/edit'),
         ];
     }
 }
