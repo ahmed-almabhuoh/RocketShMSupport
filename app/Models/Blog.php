@@ -21,6 +21,11 @@ class Blog extends Model
         return $this->belongsTo(User::class, 'creator_id', 'id');
     }
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(BlogCategory::class, 'blog_category_id', 'id');
+    }
+
 
     // Scopes
     public function statusScope($query, $status = 'active')
