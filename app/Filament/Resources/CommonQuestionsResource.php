@@ -7,10 +7,16 @@ use App\Filament\Resources\CommonQuestionsResource\RelationManagers;
 use App\Models\CommonQuestion;
 use App\Models\CommonQuestions;
 use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -18,6 +24,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class CommonQuestionsResource extends Resource
 {
@@ -33,22 +40,70 @@ class CommonQuestionsResource extends Resource
             ->schema([
                 //
 
-                // Group::make()->schema([
-                //     Section::make('Question')->schema([
+                Group::make()->schema([
+                    Section::make('Question')->schema([
 
-                //         TextInput::make('question')
-                //             ->label('FQA Question')
-                //             ->required()
-                //             ->minValue(2)
-                //             ->maxValue(50),
+                        TextInput::make('question')
+                            ->label('FQA Question')
+                            ->required()
+                            ->minValue(2)
+                            ->reactive()
+                            ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
+                                if (! $get('is_slug_changed_manually') && filled($state)) {
+                                    $set('slug', Str::slug($state));
+                                }
+                            })
+                            ->maxValue(50),
 
-                //         TextInput::make('slug')
-                //             ->label('FQA Question Slug')
-                //             ->required()
-                //             ->minValue(2)
-                //             ->maxValue(50),
-                //     ]),
-                // ]),
+                        TextInput::make('slug')
+                            ->label('FQA Question Slug')
+                            ->required()
+                            ->minValue(2)
+                            ->maxValue(50)
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('is_slug_changed_manually', true);
+                            }),
+
+                        Hidden::make('is_slug_changed_manually')
+                            ->default(false)
+                            ->dehydrated(false),
+
+                        MarkdownEditor::make('answer')
+                            ->label('FQA Answer')
+                            ->required()
+                            ->columnSpanFull(),
+
+                    ])->columns(2),
+                ]),
+
+                Group::make()->schema([
+
+                    Section::make('Visibility & Publishing')
+                        ->schema([
+
+                            Select::make('status')
+                                ->label('FQA Status')
+                                ->helperText('Visible questions will automatically show.')
+                                ->options([
+                                    'visible' => 'Visible',
+                                    'invisible' => 'Invisible',
+                                ]),
+
+                            DateTimePicker::make('published_at')
+                                ->label('Publish Question At'),
+                        ]),
+
+
+                    Section::make('Category')
+                        ->schema([
+
+                            Select::make('category_id')
+                                ->relationship('category', 'name_en')
+                                ->searchable()
+                                ->label('Category'),
+                                
+                        ]),
+                ]),
             ]);
     }
 
