@@ -48,8 +48,8 @@ class BlogResource extends Resource
                         TextInput::make('title')
                             ->label('Blog Title')
                             ->required()
-                            ->minLength(2)
-                            ->maxLength(50)
+                            ->minValue(2)
+                            ->maxValue(50)
                             ->unique()
                             ->afterStateUpdated(function (Get $get, Set $set, ?string $state) {
                                 if (! $get('is_slug_changed_manually') && filled($state)) {
@@ -61,8 +61,8 @@ class BlogResource extends Resource
                         TextInput::make('slug')
                             ->label('Blog Slug')
                             ->required()
-                            ->minLength(2)
-                            ->maxLength(50)
+                            ->minValue(2)
+                            ->maxValue(50)
                             ->unique()
                             ->afterStateUpdated(function (Set $set) {
                                 $set('is_slug_changed_manually', true);

@@ -97,11 +97,11 @@ class CommonQuestionsResource extends Resource
                     Section::make('Category')
                         ->schema([
 
-                            Select::make('category_id')
+                            Select::make('common_question_category_id')
                                 ->relationship('category', 'name_en')
                                 ->searchable()
                                 ->label('Category'),
-                                
+
                         ]),
                 ]),
             ]);
@@ -117,7 +117,7 @@ class CommonQuestionsResource extends Resource
                     ->label('Common Question')
                     ->sortable()
                     ->searchable()
-                    ->formatStateUsing(fn($record) => ucfirst($record)),
+                    ->formatStateUsing(fn($record) => ucfirst($record->question)),
 
                 TextColumn::make('slug')
                     ->label('FQA Slug')
@@ -132,7 +132,7 @@ class CommonQuestionsResource extends Resource
                 TextColumn::make('status')
                     ->label('FQA Status')
                     ->sortable()
-                    ->formatStateUsing(fn($record) => ucfirst($record))
+                    ->formatStateUsing(fn($record) => ucfirst($record->status))
                     ->searchable(),
 
                 TextColumn::make('published_at')
