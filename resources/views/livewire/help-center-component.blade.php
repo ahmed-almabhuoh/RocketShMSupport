@@ -305,7 +305,8 @@
                     <div class="text-dark-50 line-height-lg mb-8">
                         <p>{{ $blog->heading }}</p>
 
-                        <a class="font-weight-bold" href="#">{{ __('Read More') }}</a>
+                        <a class="font-weight-bold"
+                            href="{{ route('blogs.view', $blog->slug) }}">{{ __('Read More') }}</a>
                     </div>
                 @endforeach
 
@@ -323,16 +324,18 @@
                         <div class="row">
                             <!--begin::Content-->
                             <div class="col-sm-7">
-                                <h2 class="text-dark mb-4">Get in Touch</h2>
-                                <p class="text-dark-50 line-height-lg">Windows 10 automatically installs
-                                    updates to make for sure</p>
+                                <h2 class="text-dark mb-4">{{ __('Get in Touch') }}</h2>
+                                <p class="text-dark-50 line-height-lg">
+                                    {{ __('Have questions or feedback? Reach out to us via email, phone, or social media, and we’ll be happy to assist you.') }}
+                                </p>
                             </div>
                             <!--end::Content-->
                             <!--begin::Button-->
                             <div class="col-sm-5 d-flex align-items-center justify-content-sm-end">
-                                <a href="custom/apps/support-center/feedback.html"
-                                    class="btn font-weight-bolder text-uppercase font-size-lg btn-primary py-3 px-6">Submit
-                                    a Request</a>
+                                <a href="https://rocket-shm.hophearts.com/"
+                                    class="btn font-weight-bolder text-uppercase font-size-lg btn-primary py-3 px-6">
+                                    {{ __('Submit a Request') }}
+                                </a>
                             </div>
                             <!--end::Button-->
                         </div>
@@ -347,16 +350,18 @@
                         <div class="row">
                             <!--begin::Content-->
                             <div class="col-sm-7">
-                                <h2 class="text-dark mb-4">Live Chat</h2>
-                                <p class="text-dark-50 line-height-lg">Windows 10 automatically installs
-                                    updates to make for sure</p>
+                                <h2 class="text-dark mb-4">{{ __('Live Chat') }}</h2>
+                                <p class="text-dark-50 line-height-lg">
+                                    {{ __('Need immediate assistance? Our live chat is available for quick support. Connect with us in real-time for answers and help.') }}
+                                </p>
                             </div>
                             <!--end::Content-->
                             <!--begin::Button-->
                             <div class="col-sm-5 d-flex align-items-center justify-content-sm-end">
                                 <a href="#" data-toggle="modal" data-target="#kt_chat_modal"
-                                    class="btn font-weight-bolder text-uppercase font-size-lg btn-success py-3 px-6">Start
-                                    Chat</a>
+                                    class="btn font-weight-bolder text-uppercase font-size-lg btn-success py-3 px-6">
+                                    {{ __('Start Chat') }}
+                                </a>
                             </div>
                             <!--end::Button-->
                         </div>
