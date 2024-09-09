@@ -11,4 +11,8 @@ Route::prefix('')->group(function () {
     Route::get('', HelpCenterComponent::class);
 
     Route::get('blog/{slug}', BlogComponent::class)->name('blogs.view');
+
+    Route::get('test', function () {
+        dd('test');
+    });
 });
