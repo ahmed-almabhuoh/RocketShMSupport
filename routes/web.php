@@ -13,6 +13,6 @@ Route::prefix('')->group(function () {
     Route::get('blog/{slug}', BlogComponent::class)->name('blogs.view');
 
     Route::get('test', function () {
-        dd('test');
+        dd('We are Here');
     });
 });
